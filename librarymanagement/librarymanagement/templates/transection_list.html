@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-2">
+  <div class="card-body">
+  <div class="card">
+      <div class="card-header">
+    
+        <h2 class="text-primary"> Transactions History</h2>
+    
+      </div>
+
+      
+      <div class="row">
+    
+        <form action="/transection_history/" method="POST">
+          {% csrf_token%}
+          <div class="col-md-12 text-center" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div class="col-6 mb-3 mt-2">
+              <label for="user_name" >Member name</label>
+              <input class="form-control " name="name" id="book_name" type="text">
+            </div>
+          </div>
+
+
+          <div class="mb-2">
+            <button class="btn btn-primary"  type="submit"> Submit</button>
+  
+              <a href="/transection_history/">
+                <button class="btn btn-secondary"   type="button"> Reset</button>
+              </a>
+            </div>
+
+        </form>
+
+      </div>
+      
+      
+      <div class=" body" >
+        <div class="card-body">
+          <div class="col-md-6">
+            
+              <ul class=" list-group">
+                <li class="list-group-item" style="color: orangered;">Rules:</li>
+                <li class="list-group-item">Rent a book is free for 7 days from Issue date </li>
+                <li class="list-group-item">Rent is Calculate as: (Current date - Due date) * 10Rs </li>
+              </ul>
+          
+          </div>
+
+        </div>
+        <div class="card-body">
+          <div class="row ">
+            <div>
+              <table class="table table-bordered">
+                <thead >
+                  <tr>
+                    <td>Member name </td>
+                    <td>Book name </td>
+                    <td>issue date</td>
+                    <td>due date</td>
+                    <td>rent fee</td>
+                    <td>Return date</td>
+                    <td>Action</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for i in data %}
+                  <tr>
+                    <td>{{i.user}}</td>
+                    <td>{{i.book.title}}</td>
+                    <td>{{i.issue_date}}</td>
+                    <td>{{i.due_date}}</td>
+                    <td>{{i.rent_fee}}</td>
+                    <td>{%if i.return_date %} {{i.return_date}} {% else %} Not Returned  {% endif %}</td>
+                    <td> 
+                      
+                      <a href="/calculate_dues/{{i.id}}"  {%if i.return_date %} disabled {% endif %} style="text-decoration: none;">
+                        <button type="button" class="btn btn-primary" {%if i.return_date %} disabled {% endif %} >
+                          Calculate Rent Fee
+                        </button>
+    
+                      </a>
+                      <a  onclick="return_book({{i.id}})" {%if i.return_date %} disabled {% endif %} style="text-decoration: none;">
+                        <button type="button" class="btn btn-primary" {%if i.return_date %} disabled {% endif %} >
+                          Return
+                        </button>
+    
+                      </a>
+                    </td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+      
+              </table>
+    
+            </div>
+    
+            </div>
+
+        </div>
+
+      </div>
+        
+    
+      
+
+    </div> 
+
+  </div>
+
+
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+
+  function return_book(TID) {
+    //event.preventDefault();
+    var ID = TID
+
+    if(ID){
+        swal({
+          title: 'Make sure you Clear your due amount?',
+          
+          buttons: {
+            cancel: true,
+            confirm: true,
+          },
+          buttons: true,
+          dangerMode: true,
+        }).then((confirmed) => {
+            if (confirmed) {      
+                //alert("Done !")
+                //console.log(message);
+                window.location.href = "/return_book/"+ID ;
+                  }
+                  
+              })
+              
+
+        }
+    }
+   
+
+</script>
+
+
+
+{% endblock %}

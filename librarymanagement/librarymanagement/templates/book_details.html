@@ -1,0 +1,146 @@
+{% extends "base.html" %}
+{% block content %}
+<!-- 
+<div class="container mt-2">
+  <div class="card-body">
+  <div class="card">
+      <div class="card-header">
+    
+        <h2 class="text-primary"> Book details</h2>
+    
+      </div>
+    
+
+
+
+      <div class="row">
+      
+        <h5>title</h5>
+        <h5> {{data.title}}</h5>
+        <h5>ISBN no</h5>
+        <h5> {{data.isbn}}</h5>
+        <h5>Publisher name</h5>
+        <h5> {{data.publisher_name}}</h5>
+
+        <h5><span>Publisher date </span> {{data.publication_date}}</h5>
+        
+       
+        
+      </div>
+
+    </div> 
+
+  </div>
+
+
+</div> -->
+
+
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet"> -->
+  <title> Book Details</title>
+  <style>
+    body {
+      background-color: #f8f9fa;
+    }
+
+    .card {
+      border: none;
+      border-radius: 15px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      background-color: #007bff;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+      border-top-left-radius: 15px;
+      border-top-right-radius: 15px;
+    }
+
+    .row {
+      padding: 20px;
+    }
+
+    h5 {
+      margin-bottom: 10px;
+      font-weight: bold;
+      color: #007bff;
+    }
+
+    span {
+      font-weight: bold;
+    }
+
+    .data-value {
+      color: #555;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container mt-4">
+  <div class="card">
+    <div class="card-header">
+      <h2>Book Details</h2>
+    </div>
+
+    <div class="card-body">
+      <div class="row">
+        <div class="col-md-6">
+          <h5>Title</h5>
+          <p class="data-value">{{data.title}}</p>
+        </div>
+
+        <div class="col-md-6">
+          <h5>ISBN no</h5>
+          <p class="data-value">{{data.isbn}}</p>
+        </div>
+
+        <div class="col-md-6">
+          <h5>Publisher name</h5>
+          <p class="data-value">{{data.publisher_name}}</p>
+        </div>
+
+        <div class="col-md-6">
+          <h5><span>Publisher date</span></h5>
+          <p class="data-value">{{data.publication_date}}</p>
+        </div>
+        <div class="col-md-6">
+          <h5><span>Authors name</span></h5>
+          <p class="data-value">{{data.authors}}</p>
+        </div>
+        <div class="col-md-6">
+          <h5><span>isbn no</span></h5>
+          <p class="data-value">{{data.isbn}}</p>
+        </div>
+        <div class="col-md-6">
+          <h5><span>language_code</span></h5>
+          <p class="data-value">{{data.language_code}}</p>
+        </div>
+        <div class="col-md-6">
+          <h5><span>publisher_name</span></h5>
+          <p class="data-value">{{data.publisher_name}}</p>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+</html>
+
+
+
+
+{% endblock %}

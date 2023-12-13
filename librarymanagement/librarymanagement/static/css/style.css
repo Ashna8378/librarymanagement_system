@@ -1,0 +1,99 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f2f2f2;
+    margin: 0;
+    padding: 0;
+}
+
+header {
+    background-color: #333;
+    color: #fff;
+    text-align: center;
+    padding: 20px 0;
+}
+
+.container {
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+}
+
+h1 {
+    font-size: 36px;
+}
+
+h2 {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.button {
+    display: inline-block;
+    background-color: #3498db;
+    color: #fff;
+    padding: 12px 24px;
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    border-radius: 5px;
+    margin: 10px;
+    transition: background-color 0.3s ease;
+}
+
+.button:hover {
+    background-color: #1e6ab4;
+}
+
+/* Add a subtle shadow to the buttons for depth */
+.button {
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Add a hover effect for buttons */
+.button:hover {
+    background-color: #1e6ab4;
+}
+
+/* Add a nice border effect to the buttons */
+.button {
+    border: 2px solid #2979ff;
+}
+
+/* Style the buttons with rounded corners */
+.button {
+    border-radius: 5px;
+}
+
+/* Style the buttons with a subtle shadow */
+.button {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Change button text color on hover */
+.button:hover {
+    color: #fff;
+}
+
+/* Style the header text with a subtle text shadow */
+header h1 {
+    font-size: 40px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Add a background gradient to the header */
+header {
+    background: linear-gradient(45deg, #333, #1e6ab4);
+}
+
+/* Center align text in the header */
+header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Add a box shadow to the header for depth */
+header {
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}

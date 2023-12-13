@@ -1,0 +1,209 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-2">
+  <div class="card-body">
+  <div class="card">
+      <div class="card-header">
+    
+        <h2 class="text-primary"> Members</h2>
+    
+      </div>
+    
+      <div class="row">
+    
+        <form action="/members/" method="POST">
+          {% csrf_token%}
+          <div class="col-md-12 text-center" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
+            <div class="col-6 mb-3 mt-2">
+              <label for="user_name" >Member name</label>
+              <input class="form-control " name="user_name" id="book_name" type="text">
+
+            </div>
+      
+            <!-- <div class="col-6 mb-3">
+              <label for="name" > Number of Page</label>
+              <input class="form-control" name="no_of_page" id="no_of_books" type="number">
+            </div> -->
+
+          </div>
+
+          <div class="mb-2">
+            <button class="btn btn-primary"  type="submit"> Submit</button>
+            <!-- <a href=""> -->
+              <a href="/members/">
+                <button class="btn btn-secondary"   type="button"> Reset</button>
+              </a>
+
+            <!-- </a> -->
+
+          </div>
+    
+        </form>
+    
+      </div>
+
+    </div> 
+
+  </div>
+
+
+  <div class="body mt-3 mb-3 ">
+    <div class="card-body">
+      <table class="table table-striped">
+        <thead class="table-dark ">
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Email Id</th>
+                <!-- <th>Page no</th> -->
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in data %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.first_name }} {{user.last_name}}</td>
+                    <td>{{ user.email }}</td>
+                    <!-- <td>{{book.num_pages}}</td> -->
+                    <td>
+                      <a href="/create_members/{{user.id}}" style="text-decoration: none;">
+                        <button class="btn btn-primary"   type="submit">Edit</button>
+
+                      </a>
+<!-- 
+                      <a  onclick="delete_members({{user.id}})" style="text-decoration: none;" >
+                        <button class="btn btn-primary"   type="submit">Delete</button>
+
+                      </a> -->
+                      
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    </div>
+  </div>
+
+</div>
+
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+<script>
+
+  function add_book(bookID ,title,authors ,average_rating ,isbn ,isbn13 ,language_code,num_pages ,ratings_count ,text_reviews_count ,publication_date ,publisher) {
+    event.preventDefault(); // Prevent the default form submission
+
+    var ID = bookID;
+    var dict={bookID: bookID,
+      title:title,
+      authors :authors,
+      average_rating :average_rating,
+      isbn :isbn,
+      isbn13 :isbn13,
+      language_code:language_code,
+      num_pages :num_pages,
+      ratings_count :ratings_count,
+      text_reviews_count :text_reviews_count,
+      publication_date :publication_date,
+      publisher: publisher, 
+    }
+    var message=[];
+    message.push(dict);
+    console.log(message);
+    
+    var jsonData = JSON.stringify(message);
+
+
+
+    var csrfToken = '{{ csrf_token }}';
+    //var selectedStatus = $("#id_patient_status").val();
+    if(ID){
+        swal({
+          title: 'Are you sure Want to add This book in you Store?',
+          buttons: {
+            cancel: true,
+            confirm: true,
+          },
+          buttons: true,
+          dangerMode: true,
+        }).then((confirmed) => {
+            if (confirmed) {      
+                //alert("Done !")
+                //console.log(message);
+                fetch('/save_books_from_api/', {
+                  method: 'POST',
+                  headers: {
+                      'Content-Type': 'application/json',
+                      'X-CSRFToken': csrfToken,
+                  },
+                  body: jsonData,
+              })
+              .then(response => response.json())
+              .then(data => {
+                  console.log('Success:', data);
+                  swal({
+                    title: 'Book added Successfuly. Check You store!',})
+              })
+              .catch((error) => {
+                  console.error('Error:', error);
+              });
+
+               //window.location.href = "/save_books_from_api/"+ ID+ "/inactive/";
+            }
+            
+            //else {
+              
+             // window.location.href = "/book_import/"   
+          //}
+
+        })
+    }
+   
+}  
+
+</script>
+
+
+
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script>
+
+  function delete_members(TID) {
+    //event.preventDefault();
+    var ID = TID
+
+    if(ID){
+        swal({
+          title: 'Are you sure want to Delete user?',
+          
+          buttons: {
+            cancel: true,
+            confirm: true,
+          },
+          buttons: true,
+          dangerMode: true,
+        }).then((confirmed) => {
+            if (confirmed) {      
+                //alert("Done !")
+                //console.log(message);
+                window.location.href = "/delete_members/"+ID ;
+                  }
+                  
+              })
+              
+
+        }
+    }
+   
+
+</script>
+
+
+
+{% endblock %}

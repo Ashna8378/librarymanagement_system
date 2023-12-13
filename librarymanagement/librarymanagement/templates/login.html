@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System - Login</title>
+    <style>
+        body{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+        body {
+            text-align: center;
+            background-image: url('3.jpeg');
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed; 
+        }
+
+        .login-container {
+            
+            max-width: 700px;
+            min-height: 200px;
+            margin: auto;
+            margin-top: 10%;
+            background: linear-gradient(45deg, #333, #1e6ab4);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        input[type="text"], input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            margin: 8px 0;
+            box-sizing: border-box;
+        }
+
+        .login{
+            background-color: #4c95af;
+            color: white;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        
+        }
+
+        input[type="submit"]:hover {
+            background-color: #3019db;
+        }
+
+        .navbar {
+            overflow: hidden;
+         
+            background: linear-gradient(45deg, #333333, #1e6ab4);
+            padding: 20px ;
+            color: #fff;
+        }   
+        
+    </style>
+</head>
+<body >
+    <div class="navbar">
+       <h1>Library Management System</h1>
+    </div>
+   
+       <div class="login-container">
+           <h2>Login form</h2>
+           {% if msg%}
+           <h2>{{msg}}</h2>
+           {% endif%}
+           <form action="." method="POST"> 
+               {% csrf_token %}
+               <label for="username">Username:</label>
+               <input type="text" id="username" name="uname" class="inputText" placeholder="User Name">
+   
+               <label for="password">Password:</label>
+               <input type="password" id="password" name="pass" class="inputText" required placeholder="Password">
+   
+               <!-- <input type="button" name="log" id="logButton" value="Login" class="login" onclick="myFunction()"> -->
+               <button class="login" type="submit">Submit button</button>
+           </form>
+     
+
+   </div>
+<!-- 
+    <script>
+
+        function myFunction() { 
+            var un = document.forms["myForm"]["Uname"].value;
+        
+           var pw = document.forms["myForm"]["Pass"].value; 
+    
+        if(un=="student" && pw=="1234") { 
+            window.location.href="index1.html";
+        
+        }
+        
+        else { 
+            alert("Invalid UserName and Password");
+        
+        }
+    } 
+</script> -->
+</html>
+

@@ -1,0 +1,52 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Library Management System | {{heading}}</title>
+    <link rel="stylesheet" type="text/css" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/bootstrap-5.3.2-dist/css/bootstrap.min.css">
+</head>
+<body >
+    <header>
+        <h1>Welcome to the Library Management System</h1>
+    </header>
+    <div class="container">
+        <!-- <h2>Welcome to the Library Management System</h2> -->
+        <p>Please select an action:</p>
+        <!-- <button class="button" onclick="location.href='add_book.html'">Add Book</button> -->
+        <a href="/book_import/" style="text-decoration: none;">
+            <button class="button " >Add Book</button>
+        </a>
+
+        <a href="/book_store/" style="text-decoration: none;">
+            <button class="button " >Book Store</button>
+        </a>
+        <a href="/members/" style="text-decoration: none;">
+            <button class="button " >Members</button>
+        </a>
+
+        <a href="/create_members/" style="text-decoration: none;">
+            <button class="button " >Add Members</button>
+        </a>
+
+        <a href="/transection_history/" style="text-decoration: none;">
+            <button class="button " >Transactions</button>
+        </a>
+
+        <a href="/logout/" style="text-decoration: none;">
+            <button class="button " >logout</button>
+        </a>
+        
+        <!-- <button class="button" onclick="location.href='available_books.html'">Available Books</button> -->
+        <!-- <button class="button" onclick="location.href='login.html'">Login</button> -->
+    </div>
+
+    {% block content %}
+
+    {% endblock %}
+    
+</body>
+
+<script src="/static/bootstrap-5.3.2-dist/js/bootstrap.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</html>

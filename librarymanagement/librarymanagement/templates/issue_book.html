@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+{% block content %}
+
+<div class="container mt-2">
+  <div class="card-body">
+  <div class="card">
+      <div class="card-header">
+    
+        <h2 class="text-primary"> Issue Book to your member</h2>
+    
+      </div>
+    
+      <div class="row">
+    
+        <form action="/transection/" method="POST">
+          {% csrf_token%}
+           <div class="row">
+            {% if msg %}
+              <span style="color: orangered;"> {{msg}}</span>
+            {% endif %}
+
+           </div>
+            <div class="row  mb-3 mt-2">
+              <div class="col-md-6 ">
+                <select class="form-control" name="book" id="">
+                  <option value="{{book.id}}"> {{book.title}} </option>
+                </select>
+  
+              </div>
+                <div class="col-md-6">
+                  <select class="form-control" name="member" id="">
+                    <option value="">--------</option>
+                    {% for data in member  %}
+                    <option value="{{data.id}}">{{data.first_name}} {{data.last_name}}</option>
+                    {% endfor %}
+  
+                  </select>
+
+                </div>
+            
+        
+
+          </div>
+
+          <div class="mb-2">
+            <a href="">
+              <button class="btn btn-primary"  type="submit"> Submit</button>
+
+            </a>
+            <!-- <a href=""> -->
+              
+                <button class="btn btn-secondary"  onclick="window.history.back()" type="button"> Cancel</button>
+              
+
+            <!-- </a> -->
+
+          </div>
+    
+        </form>
+    
+      </div>
+
+    </div> 
+
+  </div>
+
+
+</div>
+
+<!-- Include jQuery library -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+
+
+
+
+{% endblock %}
