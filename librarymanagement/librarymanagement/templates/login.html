@@ -1,8 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!DOCTYPE html>                                                                     {# Declares the document type and version of HTML being used #}         
+<html lang="en">                                                                    {# Defines the HTML root element with the language attribute set to "en" for English #} 
+<head>                                                                              {# Contains meta tags and other head elements (Note: In the provided code, it's empty) #}
+    <meta charset="UTF-8">                                                                                                                       
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">           
     <title>Library Management System - Login</title>
     <style>
         body{
@@ -65,48 +65,31 @@
         
     </style>
 </head>
-<body >
-    <div class="navbar">
-       <h1>Library Management System</h1>
-    </div>
+<body>                                                   {# Represents the main content of the HTML document #}
+    <div class="navbar">                                  {# Defines a division (container) with the class "navbar" for styling. Often used for navigation bars #}
+       <h1>Library Management System</h1>                
+    </div>                                                 
    
-       <div class="login-container">
-           <h2>Login form</h2>
-           {% if msg%}
-           <h2>{{msg}}</h2>
-           {% endif%}
-           <form action="." method="POST"> 
-               {% csrf_token %}
-               <label for="username">Username:</label>
-               <input type="text" id="username" name="uname" class="inputText" placeholder="User Name">
+       <div class="login-container">                                                                                                 {# Another division for the login form container.#}
+           <h2>Login form</h2>                                                                                                       {# Heading indicating that this is a login form. #}
+           {% if msg%}                                                                                                               {# Django template tag for checking if the variable msg exists. #}
+           <h2>{{msg}}</h2>                                                                                                          {# Displays the content of the msg variable if it exists.#}
+           {% endif%}                                                                                                                {# Ends the Django template if statement.#}
+           <form action="." method="POST">                                                                                           {# Form element with the action attribute set to "." (current URL) and the method attribute set to POST.#}
+               {% csrf_token %}                                                                                                      {# Django template tag for inserting a CSRF token for form security.#}
+               <label for="username">Username:</label>                                                                               {# Label for the username input field #}
+               <input type="text" id="username" name="uname" class="inputText" placeholder="User Name">                              {# Text input for the username with an ID, name, class, and a placeholder.#}
    
-               <label for="password">Password:</label>
-               <input type="password" id="password" name="pass" class="inputText" required placeholder="Password">
+               <label for="password">Password:</label>                                                                               {# Label for the password input field.#}                                                                         
+               <input type="password" id="password" name="pass" class="inputText" required placeholder="Password">                   {# Password input with ID, name, class, required attribute, and a placeholder. #}
    
                <!-- <input type="button" name="log" id="logButton" value="Login" class="login" onclick="myFunction()"> -->
-               <button class="login" type="submit">Submit button</button>
-           </form>
+               <button class="login" type="submit">Submit button</button>                                                            {# Login button with the class "login" and a type attribute set to submit #}                     
+           </form>                                                                                                                   {# Closing tag for the form.#}
      
 
-   </div>
-<!-- 
-    <script>
+   </div>                                                                                                                            {# Closing tag for the login container division.#}
 
-        function myFunction() { 
-            var un = document.forms["myForm"]["Uname"].value;
-        
-           var pw = document.forms["myForm"]["Pass"].value; 
-    
-        if(un=="student" && pw=="1234") { 
-            window.location.href="index1.html";
-        
-        }
-        
-        else { 
-            alert("Invalid UserName and Password");
-        
-        }
-    } 
-</script> -->
-</html>
+</body>                                                                                                                        {# Closing tag for the body element.#}
+</html>                                                                                                                        {# Closing tag for the HTML document.#}
 

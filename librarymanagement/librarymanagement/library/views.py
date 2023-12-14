@@ -1,46 +1,46 @@
-from django.shortcuts import redirect, render
-import json
-from library.models import Book , role_map, role
-from django.contrib.auth.models import User
-from datetime import datetime
-from django.http import JsonResponse
-import requests
-from rest_framework.views import APIView
-from django.views.decorators.csrf import csrf_exempt
-from django.utils.decorators import method_decorator
-from .forms import *
-from django.db.models import Q
-from django.contrib.auth import authenticate, logout, login
-from django.contrib import messages, auth
-from django.shortcuts import get_object_or_404
+from django.shortcuts import redirect, render               # These functions are used to handle HTTP responses and rendering templates.
+import json                                                 # Imports the json module for working with JSON data.
+from library.models import Book , role_map, role            # Imports the Book, role_map, and role models from the library app.
+from django.contrib.auth.models import User                 # Imports the User model from django.contrib.auth.models.
+from datetime import datetime                               # Imports the datetime class from the datetime module for handling date and time.
+from django.http import JsonResponse                        # Imports the JsonResponse class from django.http for returning JSON responses.
+import requests                                             # Imports the requests library for making HTTP requests.
+from rest_framework.views import APIView                    # Imports the APIView class from rest_framework.views. This is a base class for creating API views.
+from django.views.decorators.csrf import csrf_exempt        # Imports the csrf_exempt decorator to exempt a view from CSRF protection.
+from django.utils.decorators import method_decorator        # Imports the method_decorator utility for decorating class-based views with function-based decorators
+from .forms import *                                        # Imports all forms defined in the forms.py file within the same directory.
+from django.db.models import Q                              # Imports the Q object for complex queries.
+from django.contrib.auth import authenticate, logout, login # Imports functions for user authentication (authenticate, logout, login).
+from django.contrib import messages, auth                   # Imports modules for displaying messages and managing user authentication
+from django.shortcuts import get_object_or_404              # Imports the get_object_or_404 function for getting an object by its primary key or returning a 404 response.
 
 
 
 
-def login(request):
-    if request.method == 'POST':
-        print("---hijlklnnk")
-        username=request.POST.get("uname")
-        password=request.POST.get("pass")
+def login(request):                                                            # This defines a function named login that handles user login.
+    if request.method == 'POST':                                               # Checks if the HTTP request method is POST. This is typically the case when a form is submitted.
+        print("---hijlklnnk")                                                  # This is a print statement that outputs ---hijlklnnk to the console. It's likely used for debugging purposes to check if the code reaches this point.
+        username=request.POST.get("uname")                                     # Retrieves the value of the "uname" parameter from the POST data. This is likely the entered username from the login form.
+        password=request.POST.get("pass")                                      # Retrieves the value of the "pass" parameter from the POST data. This is likely the entered password from the login form.
         
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            auth.login(request, user)
-            print("--------------------------------------user")
-            return redirect('book_import')
-        else:
-              return render(request, 'login.html', {'msg':"User not Found"})
-    else:
-        return render(request, 'login.html', locals())
+        user = authenticate(username=username, password=password)              # Uses Django's authenticate function to check if the provided username and password match a user in the database. If successful, user will be the authenticated user object; otherwise, it will be None.
+        if user is not None:                                                   # Checks if the authentication was successful (i.e., if user is not None).
+            auth.login(request, user)                                          # Logs in the user using Django's login function. It sets the user in the session.
+            print("--------------------------------------user")                # Another print statement, likely for debugging purposes.
+            return redirect('book_import')                                     # Redirects the user to the 'book_import' URL if the login is successful.
+        else:                                                                  # Executes if the authentication fails.
+              return render(request, 'login.html', {'msg':"User not Found"})   # Renders the 'login.html' template with a message indicating that the user was not found.
+    else:                                                                      # Executes if the request method is not POST (i.e., for GET requests).
+        return render(request, 'login.html', locals())                         # Renders the 'login.html' template with the local variables available in the current context. This is likely used to display the login form on the initial page load.
 
 
-def logout_view(request):
-    logout(request)
-    return redirect('login')
+def logout_view(request):                                                      # Defines a function named logout_view that handles user logout.                                       
+    logout(request)                                                            # Calls Django's logout function, which logs out the user by removing the user's ID from the request's session data.
+    return redirect('login')                                                   # Redirects the user to the 'login' URL after logging out.
 
-def home(request):
+def home(request):                                                             # Defines a function named home that renders the 'home.html' template.
    
-    return render(request, 'home.html', locals())
+    return render(request, 'home.html', locals())                              # Renders the 'home.html' template using the render function from Django. The template is rendered with the local variables available in the current context.
 
 
 # def add_book(request):
