@@ -51,17 +51,17 @@ def home(request):                                                             #
 
 
 # save data from api
-class save_books_from_api(APIView):
+class save_books_from_api(APIView):          # This defines a class-based view named save_books_from_api that inherits from Django's APIView.
     # @method_decorator(csrf_exempt)
-    def post(self, request):
+    def post(self, request):                 # This defines the post method within the class, which will handle HTTP POST requests.
         # data = request.data
         # print(data)
-        if request.method == 'POST':
+        if request.method == 'POST':                      # It checks if the incoming request method is indeed POST.
             # api_data = request.POST.get('api_data') 
-            api_data = request.data
+            api_data = request.data                       # It retrieves the data from the POST request.
             if api_data:
                 # data = json.loads(data)
-                print(api_data)
+                print(api_data)                           # 
 
                 for book_data in api_data:
                     book = Book(
