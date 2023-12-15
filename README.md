@@ -1,6 +1,15 @@
-# Library Management System
-# About
-# Screenshots
+# Library Management Web Application
+
+## About
+A local library is in dire need of a web application to ease their work. The library management system must allow a librarian to track books and their quantity, books issued to members, book fees.
+## Getting Started
+Install Requirements 
+1. install python 
+2. pip install django
+3. pip install restframework
+4. pip install requests
+5. python3 manage.py runserver
+## Screenshots:
 ### Login Page
 ![Screenshot from 2023-12-15 17-41-17](https://github.com/Ashna8378/librarymanagement_system/assets/121333185/701b7642-b0a3-476d-b945-c005415b5adb)
 ### Add Books 
