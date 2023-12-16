@@ -157,21 +157,21 @@ def members(request):                                                     #  Thi
 
 
 # add or edit members
-def add_edit_members(request, member_id=None):
-    heading = "Create/Edit Members"
+def add_edit_members(request, member_id=None):                         # Defines a function named add_edit_members for creating or editing user members.
+    heading = "Create/Edit Members"                                    #  Initializes the heading variable with the value "Create/Edit Members".
 
     # Check if the member_id is provided for editing existing member
-    if member_id:
-        member = get_object_or_404(User, id=member_id)
-        forms = UserForm(instance=member)
+    if member_id:                                                      # Checks if member_id is provided for editing an existing member. If yes, retrieves the user and role mapping information
+        member = get_object_or_404(User, id=member_id)                 # 
+        forms = UserForm(instance=member)                              # Initializes a UserForm for collecting user data
         role_mapping = get_object_or_404(role_map, user=member)
     else:
         forms = UserForm()
 
-    if request.method == 'POST':
-        forms = UserForm(request.POST, instance=member if member_id else None)
-        if forms.is_valid():
-            user = forms.save(commit=False)
+    if request.method == 'POST':                                                           # If the request method is POST, processes the form data
+        forms = UserForm(request.POST, instance=member if member_id else None)             # Updates the existing user if member_id is provided.
+        if forms.is_valid():                                                               # Creates a new user if member_id is not provided.
+            user = forms.save(commit=False)                                                # Creates a role mapping for a new user with a default role (id=2)
             user.save()
 
             if not member_id:  # Creating new member
@@ -181,35 +181,38 @@ def add_edit_members(request, member_id=None):
                 )
                 role_mapping.save()
 
-            return redirect('members')
+            return redirect('members')                                    # Renders the 'add_edit.html' template with local variables
 
-    return render(request, "add_edit.html", locals())
-
-
-def delete_members(request, member_id=None):
-    if member_id:
-        member = get_object_or_404(User, id=member_id)
-        member.is_active=False
-        member.save()
-        return redirect('members')
+    return render(request, "add_edit.html", locals())                     # Returns the rendered template as an HTTP response.
 
 
 
 
-def book_details(request , bookid):
-
-    data = Book.objects.get(id = bookid)
-    print(data , "--------------")
-    return render(request,  "book_details.html" , locals() )
-
-
-def issue_book(request , bookid):
-    book = Book.objects.get(id = bookid)
-    print(book , "---------------------book")
-    member= User.objects.filter(is_active = True).exclude(role_map__role__name='librarian')
+def delete_members(request, member_id=None):                              # Defines a function named delete_members for deleting a user member.
+    if member_id:                                                         # Checks if member_id is provided.
+        member = get_object_or_404(User, id=member_id)                    # Retrieves the user member with the specified member_id
+        member.is_active=False                                            # Sets the is_active field of the user to False (deactivates the user).
+        member.save()                                                     
+        return redirect('members')                                        # Redirects to the 'members' page after deletion.
 
 
-    return render(request,  "issue_book.html" , locals() )
+
+
+
+
+def book_details(request , bookid):                                    # Defines a function named book_details that handles displaying details for a specific book.
+    data = Book.objects.get(id = bookid)                               # Retrieves the book data from the database based on the provided bookid.
+    print(data , "--------------")                                     # Prints the book data to the console for debugging purposes.
+    return render(request,  "book_details.html" , locals() )           # Renders the 'book_details.html' template with local variables.
+
+
+def issue_book(request , bookid):                                      # Defines a function named issue_book that handles issuing a book to a user.
+    book = Book.objects.get(id = bookid)                               # Retrieves the book data from the database based on the provided bookid.
+    print(book , "---------------------book")                          # Prints the book data to the console for debugging purposes.
+    member= User.objects.filter(is_active = True).exclude(role_map__role__name='librarian')       # Retrieves a list of active users excluding those with the role of 'librarian'.
+
+
+    return render(request,  "issue_book.html" , locals() )                                        # Renders the 'issue_book.html' template with local variables.
 
 def transactions(request):
     bookID= request.POST.get('book')
