@@ -17,7 +17,7 @@
           <div class="col-md-12 text-center" style="display: flex; flex-direction: column; justify-content: center; align-items: center;">
             <div class="col-6 mb-3 mt-2">
               <label for="user_name" >Member name</label>
-              <input class="form-control " name="user_name" id="book_name" type="text">
+              <input class="form-control " name="user_name" id="book_name" type="text" placeholder="Search here...">
 
             </div>
       
@@ -67,6 +67,7 @@
                     <td>{{ user.first_name }} {{user.last_name}}</td>
                     <td>{{ user.email }}</td>
                     <!-- <td>{{book.num_pages}}</td> -->
+                    
                     <td>
                       <a href="/create_members/{{user.id}}" style="text-decoration: none;">
                         <button class="btn btn-primary"   type="submit">Edit</button>

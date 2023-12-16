@@ -59,12 +59,12 @@ class save_books_from_api(APIView):          # This defines a class-based view n
         if request.method == 'POST':                      # It checks if the incoming request method is indeed POST.
             # api_data = request.POST.get('api_data') 
             api_data = request.data                       # It retrieves the data from the POST request.
-            if api_data:
+            if api_data:                                  # It checks if there is data in the API request.
                 # data = json.loads(data)
-                print(api_data)                           # 
+                print(api_data)                           # It prints the received API data for debugging purposes.
 
-                for book_data in api_data:
-                    book = Book(
+                for book_data in api_data:                # It iterates through each book data in the received API data
+                    book = Book(                          #  It creates a Book object using the provided data from the API.
                         title=book_data.get('title'),
                         authors=book_data.get('authors'),
                         average_rating=float(book_data.get('average_rating')),
@@ -77,72 +77,74 @@ class save_books_from_api(APIView):          # This defines a class-based view n
                         publication_date=datetime.strptime(book_data.get('publication_date'), '%m/%d/%Y').date(),
                         publisher_name=book_data.get('publisher'),
                     )
-                    book.save()
+                    book.save()                            # It saves the created Book object to the database.
                     
-                return JsonResponse({'message': 'Books saved successfully'})
+                return JsonResponse({'message': 'Books saved successfully'})          #  If the API data is present and the books are successfully saved, it returns a JSON response indicating success.
                 # return render(request, "add_book.html", locals())
 
             else:
-                return JsonResponse({'error': 'API data is missing'}, status=400)
+                return JsonResponse({'error': 'API data is missing'}, status=400)     # If there is no API data, it returns a JSON response indicating missing data with a status code of 400.
 
-        return JsonResponse({'error': 'Invalid request'}, status=400)
-
-
+        return JsonResponse({'error': 'Invalid request'}, status=400)                 #     If the request method is not POST, it returns a JSON response indicating an invalid request with a status code of 400.
 
 
 
-# fatch data from api
-def book_import(request):
+
+
+
+
+# fetch data from api
+def book_import(request):                                            # This defines a function named book_import to fetch data from an API.
     # Get the input value
-    book_name = request.POST.get('book_name' , '')
+    book_name = request.POST.get('book_name' , '')                   # It retrieves the values of book_name and page_no from the POST request. If not present, it defaults page_no to 1.
     page_no = request.POST.get('no_of_page', 1)
-    print(book_name , "--------------------")
+    print(book_name , "--------------------")                        # It prints the value of book_name for debugging purposes.
 
     # Make the API request
-    api_url = 'https://frappe.io/api/method/frappe-library/'
-    if page_no:
+    api_url = 'https://frappe.io/api/method/frappe-library/'         # It sets the URL of the API to 'https://frappe.io/api/method/frappe-library/'.           
+    if page_no:                                                      # It creates parameters for the API request based on the input values (book_name and page_no).
         params = {'page': page_no, 'title': book_name}
     else:
         params = {'page': 1, 'title': book_name}
 
     
-    try:
+    try:                                                              # It makes a GET request to the API using the requests.get method with the specified URL and parameters.
 
         response = requests.get(api_url, params=params)
         
         # Check if the request was successful (status code 200)
-        if response.status_code == 200:
+        if response.status_code == 200:                               # If the API request is successful (status code 200), it converts the response data to JSON and renders the 'add_book.html' template with the obtained data.
             data = response.json()
             
             # return JsonResponse(data)
             return render(request, "add_book.html", locals())
-        else:
+        else:                                                         # If the API request is not successful, it returns a JSON response indicating the failure along with the HTTP status code.
             return JsonResponse({'error': 'Failed to fetch data from the API'}, status=response.status_code)
 
-    except requests.RequestException as e:
+    except requests.RequestException as e:                            # It catches any requests.RequestException (general exception for request-related errors) and returns a JSON response indicating the failure with an HTTP status code of 500.
         return JsonResponse({'error': f'Request failed: {str(e)}'}, status=500)
     
 
 
 # store : show available books in your store
-def book_store(request):
-    heading="Book Store"
-    book_name = request.POST.get('book_name' , '')
+def book_store(request):                                                                                 # This defines a function named book_store to display available books in the store.
+    heading="Book Store"                                                                                 # It initializes the variable heading with the value "Book Store".
+    book_name = request.POST.get('book_name' , '')                                                       # It retrieves the value of book_name from the POST request 
    
-    data = Book.objects.filter(is_rent =0)
-    if book_name:
+    data = Book.objects.filter(is_rent =0)                                                               # It retrieves a queryset of books (data) from the Book model where is_rent is set to 0, indicating the books are available for rent.
+    if book_name:                                                                                        # If book_name is provided, it further filters the books based on whether the title or authors contain the specified book_name using the Q object for complex queries.
         data = data.filter(Q(title__icontains=book_name) | Q(authors__icontains = book_name) )
     else:
         data = data
-    return render(request, "book_store.html", locals())
+    return render(request, "book_store.html", locals())                                                   # It returns the rendered template as an HTTP response.
 
 # To show list om members
-def members(request):
-    heading="Members List"
-    name = request.POST.get('user_name' , '')
+def members(request):                                                     #  This defines a function named members to display a list of members.
+    heading="Members List"                                                # It initializes the variable heading with the value "Members List".
+    name = request.POST.get('user_name' , '')                             # It retrieves the value of name from the POST request, which is assumed to be a user's name.
 
-    objects= User.objects.filter(is_active = True).exclude(role_map__role__name='librarian')
-    if name:
+    objects= User.objects.filter(is_active = True).exclude(role_map__role__name='librarian')                                             #  It retrieves a queryset of active users (objects) excluding those with the role name 'librarian'. This is done by filtering the User model based on the is_active field and excluding users with the specified role.
+    if name:                                                                                                                             # If name is provided, it further filters the users based on whether the first name or last name contains the specified name using the Q object for complex queries. It also excludes users with the role name 'librarian'.
         data = objects.filter(Q(first_name__icontains=name) | Q(last_name__icontains=name)).exclude(role_map__role__name='librarian')
     else:
         data= objects
@@ -150,7 +152,7 @@ def members(request):
 
         # librarian ---> name --> role --> role_map
         
-    return render(request, "members.html", locals())
+    return render(request, "members.html", locals())                  # It returns the rendered template as an HTTP response.
 
 
 
