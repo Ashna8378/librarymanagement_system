@@ -6,7 +6,7 @@ A local library is in dire need of a web application to ease their work. The lib
 Install Requirements 
 1. install python 
 2. pip install django
-3. pip install restframework
+3. pip install djangorestframework
 4. pip install requests
 5. python3 manage.py runserver
 ## Screenshots:
