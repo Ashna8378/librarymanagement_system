@@ -214,31 +214,46 @@ def issue_book(request , bookid):                                      # Defines
 
     return render(request,  "issue_book.html" , locals() )                                        # Renders the 'issue_book.html' template with local variables.
 
+
+# Function for handling book transactions
 def transactions(request):
+    # Extract book and member IDs from the POST request
     bookID= request.POST.get('book')
     memberId = request.POST.get('member')
 
     print(bookID , memberId , "--------------")
     
+    
+    # Check if both bookID and memberId are present
     if bookID and memberId:
+        # Retrieve book and member objects based on IDs
         book_obj = Book.objects.get(id = bookID)
         member_obj = User.objects.get(id = memberId)
+        
+        # Retrieve existing transactions for the member
+
         old_trans = Transactions.objects.filter(id =member_obj.id )
+        # If there are existing transactions
         if old_trans:
             due_amount = 0
+            # Calculate the total due amount for the member
             for transaction in old_trans:
                 due_amount += transaction.calculate_rent_fee()
+            
+            # If due amount is less than 500, create a new transaction
             if due_amount < 500:
                 create= Transactions.objects.create(
                         user = member_obj,
                         book = book_obj
 
                 )
+                # Update the book's rental status
                 Book.objects.filter(id = bookID).update(is_rent = True)
             else:
                 print("your due amount is :" ,due_amount) 
+                # Redirect to 'issue_book.html' with an error message
                 return redirect(request , "issue_book.html",{'msg': 'Your outstanding debt is more than Rs.500 '} )
-            
+        # If there are no existing transactions, create a new transaction   
         else:
             create= Transactions.objects.create(
                         user = member_obj,
@@ -250,37 +265,54 @@ def transactions(request):
             
     return redirect('transactions_history')
 
-
+# Function for displaying transaction history
 def transactions_history(request):
-
+    # Extract the name parameter from the POST request
     name = request.POST.get('name')
+    
+    # Retrieve transactions based on the provided name (or retrieve all transactions)
     if name:
         data = Transactions.objects.filter( Q(user__first_name = name) | Q(user__last_name = name) )
     else:
         data = Transactions.objects.all()
 
+
+    # Render the 'transection_list.html' template with the retrieved data
     return render(request ,'transection_list.html' , locals() )
 
-
+# Function for handling book returns
 def return_book(request, transectionID):
+    # Extract transaction ID from the URL parameter
     transactions_ID = transectionID
+    
+    # Retrieve the transaction and book objects based on the transaction ID
     trans_obj = Transactions.objects.filter(id =transactions_ID ).first()
     book_obj = Book.objects.filter(id=trans_obj.book.id)
 
+    
+    # Update the transaction's return date and the book's rental status
     t_obj= Transactions.objects.filter(id =transactions_ID ).update(return_date = datetime.now())
     book_obj.update(is_rent = False)
 
-
+    # Redirect to the 'transactions_history' view
     return redirect('transactions_history')
 
+
+# Function for calculating and displaying dues for a specific transaction
 def calculate_dues(request, transectionID):
+    # Extract transaction ID from the URL parameter
     transactions_ID = transectionID
+    
+    # Retrieve the transaction object based on the transaction ID
     trans_obj = Transactions.objects.filter(id =transactions_ID ).first()
+    
+    # Calculate the rental fee for the transaction and save the transaction object
     fee= trans_obj.calculate_rent_fee()
     trans_obj.save()
     
     print(fee , "--------------fee")
-
+    
+    # Redirect to the 'transactions_history' view
     return redirect('transactions_history')
 
                 
