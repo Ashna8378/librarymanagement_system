@@ -1,7 +1,7 @@
 # Library Management Web Application
 
 ## About
-A local library is in dire need of a web application to ease their work. The library management system must allow a librarian to track books and their quantity, books issued to members, book fees.
+A local library is in dire need of a web application to ease their work. The library management system must allow a librarian to track books and their quantity, books issued to members, and book fees.
 ## Getting Started
 Install Requirements 
 1. install python 
