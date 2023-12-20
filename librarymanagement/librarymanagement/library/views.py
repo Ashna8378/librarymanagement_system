@@ -313,7 +313,7 @@ def calculate_dues(request, transectionID):
     
     print(fee , "--------------fee")
     
-    
+    # Redirect to the 'transactions_history' view
     return redirect('transactions_history')
 
                 
